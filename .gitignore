@@ -1,0 +1,30 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Erlang / rebar3
+_build/
+deps/
+*.beam
+*.plt
+.rebar3/
+rebar3.crashdump
+
+# Java / JSP / IDE
+*.class
+*.jar
+*.war
+*.ear
+bin/
+build/
+out/
+target/
+.classpath
+.project
+.settings/
+
+# Editor
+.vscode/
