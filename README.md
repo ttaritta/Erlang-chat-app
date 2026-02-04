@@ -2,6 +2,20 @@
 
 Simple chat application with a JSP front end and an Erlang backend.
 
+## Overview
+
+**Distribuirani chat sistem** sa arhitekturom klijent-server koji omogućava višekorisničku komunikaciju u realnom vremenu preko web interfejsa.
+
+### Ključne karakteristike:
+- ✅ **Real-time komunikacija** između korisnika
+- ✅ **Distribuirana arhitektura** - frontend i backend na odvojenim serverima
+- ✅ **Višekorisnički sistem** - više korisnika istovremeno
+- ✅ **Perzistencija sesije** preko `sessionStorage`
+- ✅ **REST API** komunikacija
+- ✅ **Actor Model** pattern za konkurentnost
+
+---
+
 ## Architecture (high level)
 
 Browser → JSP app (Tomcat) → HTTP REST → Erlang backend (Cowboy)
