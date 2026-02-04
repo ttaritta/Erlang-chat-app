@@ -4,15 +4,15 @@ Simple chat application with a JSP front end and an Erlang backend.
 
 ## Overview
 
-**Distribuirani chat sistem** sa arhitekturom klijent-server koji omogućava višekorisničku komunikaciju u realnom vremenu preko web interfejsa.
+**Distributed chat system** with a client-server architecture that enables multi-user, real-time communication through a web interface.
 
-### Ključne karakteristike:
-- ✅ **Real-time komunikacija** između korisnika
-- ✅ **Distribuirana arhitektura** - frontend i backend na odvojenim serverima
-- ✅ **Višekorisnički sistem** - više korisnika istovremeno
-- ✅ **Perzistencija sesije** preko `sessionStorage`
-- ✅ **REST API** komunikacija
-- ✅ **Actor Model** pattern za konkurentnost
+### Key features:
+- ✅ **Real-time communication** between users
+- ✅ **Distributed architecture** - frontend and backend on separate servers
+- ✅ **Multi-user system** - multiple users at the same time
+- ✅ **Session persistence** via `sessionStorage`
+- ✅ **REST API** communication
+- ✅ **Actor Model** pattern for concurrency
 
 ---
 
