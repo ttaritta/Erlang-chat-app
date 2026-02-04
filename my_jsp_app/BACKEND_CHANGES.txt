@@ -1,0 +1,108 @@
+%% BACKEND PREDLOG IZMENA
+%% 
+%% Trenutni backend struktura:
+%% - proba_server.erl    : Čuva listu korisnika i prosledi poruke
+%% - user.erl            : Process za svakog korisnika koji čuva poruke
+%% - http_hendler.erl    : HTTP handler za REST API
+%%
+%% PREDLOŽENE IZMENE:
+%% ==================
+
+%% 1. DODAJ NOVI ENDPOINT U http_hendler.erl
+%% 
+%% handle_request(<<"GET">>, <<"/users">>, Req0, State) ->
+%%     % Daj listu svih aktivnih korisnika
+%%     chat_server ! {get_users, self()},
+%%     receive
+%%         {users, Users} ->
+%%             % Pretvori listu atoma u listu stringova
+%%             UsersList = [atom_to_binary(U, utf8) || U <- Users],
+%%             Json = jsx:encode(UsersList),
+%%             Headers = maps:merge(#{<<"content-type">> => <<"application/json">>}, cors_headers()),
+%%             Req1 = cowboy_req:reply(200, Headers, Json, Req0),
+%%             {ok, Req1, State}
+%%     after 1000 ->
+%%         Headers = maps:merge(#{<<"content-type">> => <<"text/plain">>}, cors_headers()),
+%%         Req1 = cowboy_req:reply(500, Headers, <<"Timeout">>, Req0),
+%%         {ok, Req1, State}
+%%     end;
+
+%% 2. MODIFIKOVANI ENDPOINT: /messages - Filtrira poruke sa specifičnog korisnika
+%%
+%% handle_request(<<"GET">>, <<"/messages">>, Req0, State) ->
+%%     Qs   = cowboy_req:parse_qs(Req0),
+%%     Name = proplists:get_value(<<"name">>, Qs),
+%%     From = proplists:get_value(<<"from">>, Qs),
+%%     Pid  = proba_server:get_pid(Name),
+%%     case Pid of
+%%         undefined ->
+%%             Headers = maps:merge(#{<<"content-type">> => <<"text/plain">>}, cors_headers()),
+%%             Req1 = cowboy_req:reply(404, Headers, <<"User not found">>, Req0),
+%%             {ok, Req1, State};
+%%         _ ->
+%%             % Ako je navedeno 'from', filtriraj samo poruke od tog korisnika
+%%             case From of
+%%                 undefined ->
+%%                     Pid ! {get_messages, self()};
+%%                 _ ->
+%%                     Pid ! {get_messages_from, self(), From}
+%%             end,
+%%             receive
+%%                 {messages, Msgs} ->
+%%                     Json = jsx:encode(Msgs),
+%%                     Headers = maps:merge(#{<<"content-type">> => <<"application/json">>}, cors_headers()),
+%%                     Req1 = cowboy_req:reply(200, Headers, Json, Req0),
+%%                     {ok, Req1, State}
+%%             after 1000 ->
+%%                 Headers = maps:merge(#{<<"content-type">> => <<"text/plain">>}, cors_headers()),
+%%                 Req1 = cowboy_req:reply(500, Headers, <<"Timeout">>, Req0),
+%%                 {ok, Req1, State}
+%%             end
+%%     end;
+
+%% 3. MODIFIKUJ proba_server.erl - DODAJ get_users
+%%
+%% loop(Users) ->
+%%     receive
+%%         %% ... (ostali slučajevi ostaju isti) ...
+%%         
+%%         {get_users, FromPid} ->
+%%             UserList = maps:keys(Users),
+%%             FromPid ! {users, UserList},
+%%             loop(Users);
+%%             
+%%         %% ... (ostatak koda) ...
+%%     end.
+
+%% 4. MODIFIKUJ user.erl - DODAJ filtriranje poruka
+%%
+%% loop(Username, Messages) ->
+%%     receive
+%%         %% ... (ostali slučajevi ostaju isti) ...
+%%         
+%%         {get_messages_from, FromPid, FromUser} ->
+%%             % Filtriraj samo poruke od specifičnog korisnika
+%%             FromUserBinary = if is_atom(FromUser) -> atom_to_binary(FromUser, utf8); 
+%%                               true -> FromUser 
+%%                              end,
+%%             FilteredMessages = [M || M <- Messages, element(1, M) =:= FromUserBinary],
+%%             FromPid ! {messages, lists:reverse(FilteredMessages)},
+%%             loop(Username, Messages);
+%%             
+%%         %% ... (ostatak koda) ...
+%%     end.
+
+%% SAŽETAK PROMJENA:
+%% =================
+%% 
+%% Frontend:
+%% ✓ login.jsp         - Login stranica
+%% ✓ users.jsp         - Lista aktivnih korisnika (poziva /users endpoint)
+%% ✓ chat.jsp          - Chat sa specifičnim korisnikom
+%%
+%% Backend - Potrebne izmene:
+%% □ http_hendler.erl  - DODAJ /users endpoint
+%% □ http_hendler.erl  - MODIFIKOVATI /messages da prihvata 'from' parametar
+%% □ proba_server.erl  - DODAJ {get_users, FromPid} case u loop
+%% □ user.erl          - DODAJ {get_messages_from, FromPid, FromUser} case u loop
+

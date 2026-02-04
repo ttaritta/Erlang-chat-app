@@ -1,0 +1,65 @@
+nohup: ignoring input
+[0;32m===> Verifying dependencies...
+[0m[0;32m===> Analyzing applications...
+[0m[0;32m===> Compiling proba
+[0mEshell V12.2.1  (abort with ^G)
+1> Starting Cowboy
+1> Cowboy started on port 8082
+1> [0;32m===> Booted cowlib
+[0m1> [0;32m===> Booted ranch
+[0m1> [0;32m===> Booted cowboy
+[0m1> [0;32m===> Booted jsx
+[0m1> [0;32m===> Booted proba
+[0m1> LOGIN REQUEST RECEIVED
+1> Body: <<"{\"name\":\"Ko je ovo\"}">>
+1> Json decoded: #{<<"name">> => <<"Ko je ovo">>}
+1> Username: <<"Ko je ovo">>
+1> User started: <<"Ko je ovo">>
+1> 'ko je ovo' registered
+1> User 'ko je ovo' joined
+1> LOGIN REQUEST RECEIVED
+1> Body: <<"{\"name\":\"misko je\"}">>
+1> Json decoded: #{<<"name">> => <<"misko je">>}
+1> Username: <<"misko je">>
+1> User started: <<"misko je">>
+1> 'misko je' registered
+1> User 'misko je' joined
+1> 'misko je' got message from <<"Ko je ovo">>: Pozdrav misko
+1> 'ko je ovo' got message from <<"Ko je ovo">>: Pozdrav misko
+1> 'ko je ovo' got message from <<"misko je">>: Ćao ko je ovo
+1> 'misko je' got message from <<"misko je">>: Ćao ko je ovo
+1> LOGIN REQUEST RECEIVED
+1> Body: <<"{\"name\":\"k1\"}">>
+1> Json decoded: #{<<"name">> => <<"k1">>}
+1> Username: <<"k1">>
+1> User started: <<"k1">>
+1> k1 registered
+1> User k1 joined
+1> 'ko je ovo' got message from <<"k1">>: ovo je k1
+1> k1 got message from <<"k1">>: ovo je k1
+1> LOGIN REQUEST RECEIVED
+1> Body: <<"{\"name\":\"ko je ovo\"}">>
+1> Json decoded: #{<<"name">> => <<"ko je ovo">>}
+1> Username: <<"ko je ovo">>
+1> User started: <<"ko je ovo">>
+1> 'ko je ovo' registered
+1> User 'ko je ovo' joined
+1> k1 got message from <<"ko je ovo">>: ko si bre ti
+1> 'ko je ovo' got message from <<"ko je ovo">>: ko si bre ti
+1> 'ko je ovo' got message from <<"k1">>: zasto se poruka izbrisala
+1> k1 got message from <<"k1">>: zasto se poruka izbrisala
+1> k1 got message from <<"ko je ovo">>: pruka prva
+1> 'ko je ovo' got message from <<"ko je ovo">>: pruka prva
+1> LOGIN REQUEST RECEIVED
+1> Body: <<"{\"name\":\"nikola\"}">>
+1> Json decoded: #{<<"name">> => <<"nikola">>}
+1> Username: <<"nikola">>
+1> User started: <<"nikola">>
+1> nikola registered
+1> User nikola joined
+1> k1 got message from <<"nikola">>: test
+1> nikola got message from <<"nikola">>: test
+1> =INFO REPORT==== 21-Jan-2026::00:08:56.055726 ===
+SIGTERM received - shutting down
+
+1> 

@@ -1,0 +1,49 @@
+[0;32m===> Verifying dependencies...
+[0m[0;32m===> Analyzing applications...
+[0m[0;32m===> Compiling proba
+[0mEshell V12.2.1  (abort with ^G)
+1> Starting Cowboy
+1> =ERROR REPORT==== 20-Jan-2026::23:10:32.755114 ===
+Failed to start Ranch listener http in ranch_tcp:listen([{cacerts,'...'},{key,'...'},{cert,'...'},{port,8082}]) for reason eaddrinuse (address already in use)
+
+1> =SUPERVISOR REPORT==== 20-Jan-2026::23:10:32.755287 ===
+    supervisor: {<0.208.0>,ranch_listener_sup}
+    errorContext: start_error
+    reason: {listen_error,http,eaddrinuse}
+    offender: [{pid,undefined},
+               {id,ranch_acceptors_sup},
+               {mfargs,{ranch_acceptors_sup,start_link,[http,ranch_tcp]}},
+               {restart_type,permanent},
+               {significant,false},
+               {shutdown,infinity},
+               {child_type,supervisor}]
+
+1> Cowboy error: eaddrinuse
+1> [0;32m===> Booted cowlib
+[0m1> [0;32m===> Booted ranch
+[0m1> [0;32m===> Booted cowboy
+[0m1> [0;32m===> Booted jsx
+[0m1> [0;32m===> Booted proba
+[0m1> =CRASH REPORT==== 20-Jan-2026::23:10:32.755451 ===
+  crasher:
+    initial call: supervisor:ranch_acceptors_sup/1
+    pid: <0.210.0>
+    registered_name: []
+    exception exit: {listen_error,http,eaddrinuse}
+      in function  ranch_acceptors_sup:listen_error/5 (/home/andrej/proba/proba/_build/default/lib/ranch/src/ranch_acceptors_sup.erl, line 66)
+      in call from supervisor:init/1 (supervisor.erl, line 330)
+      in call from gen_server:init_it/2 (gen_server.erl, line 423)
+      in call from gen_server:init_it/6 (gen_server.erl, line 390)
+    ancestors: [<0.208.0>,ranch_sup,<0.192.0>]
+    message_queue_len: 0
+    messages: []
+    links: [<0.208.0>]
+    dictionary: [{logger,error_logger}]
+    trap_exit: true
+    status: running
+    heap_size: 2586
+    stack_size: 29
+    reductions: 4132
+  neighbours:
+
+1> 
