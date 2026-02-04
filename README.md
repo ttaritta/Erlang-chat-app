@@ -2,6 +2,26 @@
 
 Simple chat application with a JSP front end and an Erlang backend.
 
+## Architecture (high level)
+
+Browser → JSP app (Tomcat) → HTTP REST → Erlang backend (Cowboy)
+
+- The JSP app renders pages and makes HTTP requests to the backend.
+- The Erlang backend keeps chat state and serves REST endpoints.
+- The two components run independently and communicate over HTTP.
+
+## Technologies
+
+### Frontend
+- JSP (JavaServer Pages)
+- JavaScript (Fetch API, DOM updates)
+- Apache Tomcat (servlet container)
+
+### Backend
+- Erlang/OTP
+- Cowboy HTTP server
+- Rebar3 (build tool)
+
 ## Structure
 - my_jsp_app/ — JSP pages and web.xml
 - proba/ — Erlang application (rebar3)
@@ -16,6 +36,7 @@ The JSP app and the Erlang backend are separate components and must be started i
 2. Open a terminal in the [proba](proba) folder.
 3. Run:
 	- `rebar3 shell`
+4. The backend listens on port 8082 by default.
 
 ### JSP app
 1. Deploy the [my_jsp_app](my_jsp_app) folder to a Java web container (e.g., Tomcat).
